@@ -27,6 +27,11 @@ declare -a INSTALLS=(
     'php-zip'
 )
 
+declare -a INITD=(
+    'apache2'
+    'mysql'
+)
+
 #Mysql Configs
 DBUSER=root
 DBPASS=root
@@ -55,6 +60,14 @@ for install in "${INSTALLS[@]}"; do
         echo ""
     fi
 done
+
+
+echo -e "\n**************START ADD TO init.d**************\n"
+for service in "${INITD[@]}"; do
+    echo -e "\n     Adding $service\n"
+    update-rc.d $service defaults
+done
+echo -e "\n**************END ADD TO init.d**************\n"
 
 if dpkg --get-selections | grep -q "^$pkg[[:space:]]*apache2" >/dev/null; then
 
