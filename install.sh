@@ -63,9 +63,17 @@ done
 
 
 echo -e "\n**************START ADD TO init.d**************\n"
+if [ ! -d "/var/www/html/phpmyadmin" ]; then
+    echo -e "#! /bin/sh\n" >> /etc/init.d/start_services 
+    chmod +x /etc/init.d/start_services
+fi
+
 for service in "${INITD[@]}"; do
     echo -e "\n     Adding $service\n"
     update-rc.d $service defaults
+    if ! grep -Fxq "service $service start" /etc/init.d/start_services; then
+        echo "service $service start" >> /etc/init.d/start_services;
+    fi
 done
 echo -e "\n**************END ADD TO init.d**************\n"
 
