@@ -23,8 +23,8 @@ declare -a INSTALLS=(
     'php7.1'
     'mysql-server'
     'php7.1-mysql'
-    'php-mbstring'
-    'php-zip'
+    'php7.1-mbstring'
+    'php7.1-zip'
 )
 
 declare -a INITD=(
