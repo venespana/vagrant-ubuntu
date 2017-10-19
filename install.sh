@@ -25,11 +25,18 @@ declare -a INSTALLS=(
     'php7.1-mysql'
     'php7.1-mbstring'
     'php7.1-zip'
+    'php7.1-dom'
+    'php7.1-cli'
+    'composer'
 )
 
 declare -a INITD=(
     'apache2'
     'mysql'
+)
+
+declare -a APACHEMODULES=(
+    'rewrite'
 )
 
 #Mysql Configs
@@ -95,6 +102,13 @@ if dpkg --get-selections | grep -q "^$pkg[[:space:]]*apache2" >/dev/null; then
         echo -e "       Remove phpMyAdmin-4.7.4 package"
         rm phpMyAdmin-4.7.4-all-languages.tar.gz
     fi
+
+    echo -e "\n************START ADDING APACHE MODULES************\n"
+    for module in "${APACHEMODULES[@]}"; do
+        echo -e "\n****Tryin to add $module"
+        a2enmod $module        
+    done
+    echo -e "\n\n************END ADDING APACHE MODULES************\n"
 
     echo -e "\n\nRestart apche2 service\n"
     service apache2 restart;
