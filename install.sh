@@ -70,8 +70,9 @@ done
 
 
 echo -e "\n**************START ADD TO init.d**************\n"
-if [ ! -d "/var/www/html/phpmyadmin" ]; then
+if [ ! -d "/etc/init.d/start_services" ]; then
     echo -e "#! /bin/sh\n" >> /etc/init.d/start_services 
+    echo -e "start on vagrant-mounted" >> /etc/init.d/start_services
     chmod +x /etc/init.d/start_services
 fi
 
